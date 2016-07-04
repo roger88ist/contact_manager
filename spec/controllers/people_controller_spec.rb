@@ -23,13 +23,13 @@ RSpec.describe PeopleController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Person. As you add validations to Person, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     { first_name: 'Jane', last_name: 'Doe' }
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     { first_name: nil, last_name: nil }
-  }
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -47,7 +47,7 @@ RSpec.describe PeopleController, type: :controller do
   describe "GET #show" do
     it "assigns the requested person as @person" do
       person = Person.create! valid_attributes
-      get :show, params: {id: person.to_param}, session: valid_session
+      get :show, {id: person.to_param, session: valid_session}
       expect(assigns(:person)).to eq(person)
     end
   end
@@ -62,7 +62,7 @@ RSpec.describe PeopleController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested person as @person" do
       person = Person.create! valid_attributes
-      get :edit, params: {id: person.to_param}, session: valid_session
+      get :edit, {id: person.to_param, session: valid_session}
       expect(assigns(:person)).to eq(person)
     end
   end
@@ -71,30 +71,30 @@ RSpec.describe PeopleController, type: :controller do
     context "with valid params" do
       it "creates a new Person" do
         expect {
-          post :create, params: {person: valid_attributes}, session: valid_session
+          post :create, {person: valid_attributes, session: valid_session}
         }.to change(Person, :count).by(1)
       end
 
       it "assigns a newly created person as @person" do
-        post :create, params: {person: valid_attributes}, session: valid_session
+        post :create, {person: valid_attributes, session: valid_session}
         expect(assigns(:person)).to be_a(Person)
         expect(assigns(:person)).to be_persisted
       end
 
       it "redirects to the created person" do
-        post :create, params: {person: valid_attributes}, session: valid_session
+        post :create, {person: valid_attributes, session: valid_session}
         expect(response).to redirect_to(Person.last)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved person as @person" do
-        post :create, params: {person: invalid_attributes}, session: valid_session
+        post :create, {person: invalid_attributes, session: valid_session}
         expect(assigns(:person)).to be_a_new(Person)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {person: invalid_attributes}, session: valid_session
+        post :create, {person: invalid_attributes, session: valid_session}
         expect(response).to render_template("new")
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe PeopleController, type: :controller do
 
       it "updates the requested person" do
         person = Person.create! valid_attributes
-        put :update, params: {id: person.to_param, person: new_attributes}, session: valid_session
+        put :update, {id: person.to_param, person: new_attributes, session: valid_session}
         person.reload
         expect(person.first_name).to eq('NewFirstName')
         expect(person.last_name).to eq('NewLastName')
@@ -116,13 +116,13 @@ RSpec.describe PeopleController, type: :controller do
 
       it "assigns the requested person as @person" do
         person = Person.create! valid_attributes
-        put :update, params: {id: person.to_param, person: valid_attributes}, session: valid_session
+        put :update, {id: person.to_param, person: valid_attributes, session: valid_session}
         expect(assigns(:person)).to eq(person)
       end
 
       it "redirects to the person" do
         person = Person.create! valid_attributes
-        put :update, params: {id: person.to_param, person: valid_attributes}, session: valid_session
+        put :update, {id: person.to_param, person: valid_attributes, session: valid_session}
         expect(response).to redirect_to(person)
       end
     end
@@ -130,13 +130,13 @@ RSpec.describe PeopleController, type: :controller do
     context "with invalid params" do
       it "assigns the person as @person" do
         person = Person.create! valid_attributes
-        put :update, params: {id: person.to_param, person: invalid_attributes}, session: valid_session
+        put :update, {id: person.to_param, person: invalid_attributes, session: valid_session}
         expect(assigns(:person)).to eq(person)
       end
 
       it "re-renders the 'edit' template" do
         person = Person.create! valid_attributes
-        put :update, params: {id: person.to_param, person: invalid_attributes}, session: valid_session
+        put :update, {id: person.to_param, person: invalid_attributes, session: valid_session}
         expect(response).to render_template("edit")
       end
     end
@@ -146,13 +146,13 @@ RSpec.describe PeopleController, type: :controller do
     it "destroys the requested person" do
       person = Person.create! valid_attributes
       expect {
-        delete :destroy, params: {id: person.to_param}, session: valid_session
+        delete :destroy, {id: person.to_param, session: valid_session}
       }.to change(Person, :count).by(-1)
     end
 
     it "redirects to the people list" do
       person = Person.create! valid_attributes
-      delete :destroy, params: {id: person.to_param}, session: valid_session
+      delete :destroy, {id: person.to_param, session: valid_session}
       expect(response).to redirect_to(people_url)
     end
   end
